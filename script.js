@@ -464,7 +464,7 @@ function initCanvasBackground() {
     vy: 0,
     lastX: null,
     lastY: null,
-    radius: 180 // Area of influence
+    radius: 200 // Expanded area of influence
   };
 
   // Adjust canvas size
@@ -503,13 +503,13 @@ function initCanvasBackground() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       // Soft drift base speeds
-      this.baseVx = (Math.random() - 0.5) * 0.25;
-      this.baseVy = -Math.random() * 0.2 - 0.05; // Gentle float upwards (Antigravity)
+      this.baseVx = (Math.random() - 0.5) * 0.2;
+      this.baseVy = -Math.random() * 0.15 - 0.05; // Gentle float upwards (Antigravity)
       this.vx = this.baseVx;
       this.vy = this.baseVy;
       this.size = Math.random() * 2 + 1;
-      // Minimal white/gray slate particles to match typography theme
-      this.color = `rgba(226, 228, 233, ${Math.random() * 0.15 + 0.05})`;
+      // Muted slate gray/white particles to match minimal theme
+      this.color = `rgba(226, 228, 233, ${Math.random() * 0.18 + 0.05})`;
     }
 
     draw() {
@@ -540,21 +540,29 @@ function initCanvasBackground() {
         const distance = Math.hypot(dx, dy);
         
         if (distance < mouse.radius) {
-          // Normalize direction
           const ndx = dx / distance;
           const ndy = dy / distance;
           
-          // Repulsion force: stronger as you get closer (curved exponential decay)
-          const pushForce = Math.pow((mouse.radius - distance) / mouse.radius, 2) * 1.8;
-          
-          // Apply repulsion acceleration
-          this.vx += ndx * pushForce * 0.25;
-          this.vy += ndy * pushForce * 0.25;
+          // Physical "sweeper" boundary: strong push when very close (acts like a physical broom)
+          const minDistance = 75;
+          if (distance < minDistance) {
+            const pushDist = minDistance - distance;
+            this.x += ndx * pushDist;
+            this.y += ndy * pushDist;
+            // Add a strong sudden velocity impulse
+            this.vx += ndx * 5;
+            this.vy += ndy * 5;
+          } else {
+            // General exponential repulsion field (very noticeble at mid-range)
+            const force = (mouse.radius - distance) / mouse.radius;
+            this.vx += ndx * force * 4.5;
+            this.vy += ndy * force * 4.5;
+          }
 
-          // Drag force: follow the mouse's velocity movement slightly
+          // Swirl drag factor: pulls particles along with cursor movement path
           const dragFactor = (mouse.radius - distance) / mouse.radius;
-          this.vx += mouse.vx * dragFactor * 0.05;
-          this.vy += mouse.vy * dragFactor * 0.05;
+          this.vx += mouse.vx * dragFactor * 0.25;
+          this.vy += mouse.vy * dragFactor * 0.25;
         }
       }
 
@@ -562,9 +570,9 @@ function initCanvasBackground() {
       this.x += this.vx;
       this.y += this.vy;
 
-      // Friction / Dampening: particles decelerate back to their base drift
-      this.vx = this.vx * 0.96 + this.baseVx * 0.04;
-      this.vy = this.vy * 0.96 + this.baseVy * 0.04;
+      // Friction: decelerate back to the base slow drift speed smoothly
+      this.vx = this.vx * 0.94 + this.baseVx * 0.06;
+      this.vy = this.vy * 0.94 + this.baseVy * 0.06;
     }
   }
 
@@ -580,7 +588,7 @@ function initCanvasBackground() {
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Decay mouse speed in case it stops moving
+    // Smoothly decay mouse speed
     mouse.vx *= 0.9;
     mouse.vy *= 0.9;
 
@@ -589,7 +597,7 @@ function initCanvasBackground() {
       p.draw();
     });
 
-    // Draw minimalist lines between nearby particles
+    // Draw lines between nearby particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -597,7 +605,6 @@ function initCanvasBackground() {
         const dist = Math.hypot(dx, dy);
 
         if (dist < connectionDistance) {
-          // Fade connection line as particles drift further
           const alpha = (1 - dist / connectionDistance) * 0.08;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
