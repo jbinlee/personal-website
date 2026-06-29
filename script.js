@@ -1,11 +1,231 @@
 // Wait until DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Render all dynamic content from data.js
+  renderPortfolio();
+
+  // 2. Initialize Lucide Icons for dynamically rendered elements
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+
+  // 3. Initialize UI behaviors
   initNavbar();
   initScrollAnimations();
   initProjectFiltering();
   initContactForm();
   initCanvasBackground();
 });
+
+/* ==========================================================================
+   Dynamic Rendering System
+   ========================================================================== */
+function renderPortfolio() {
+  if (typeof PORTFOLIO_DATA === 'undefined') {
+    console.error('PORTFOLIO_DATA is not defined. Make sure data.js is loaded first.');
+    return;
+  }
+
+  const { profile, education, stats, experience, projects, skills } = PORTFOLIO_DATA;
+
+  // 1. Update logo text
+  const logoEl = document.getElementById('nav-logo');
+  if (logoEl) {
+    logoEl.innerHTML = `${profile.name}<span class="logo-dot"></span>`;
+  }
+
+  // 2. Render Hero
+  const heroWrapper = document.getElementById('hero-content-wrapper');
+  if (heroWrapper) {
+    let recruitingHtml = '';
+    if (profile.recruitingMode) {
+      recruitingHtml = `<div class="badge-recruiting"><span class="badge-pulse"></span> ${profile.recruitingStatus}</div>`;
+    }
+    
+    heroWrapper.innerHTML = `
+      ${recruitingHtml}
+      <h1>Building the Future of <span class="highlight">Intelligent Software</span></h1>
+      <p class="hero-subtitle">${profile.subtitle}</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View My Work <i data-lucide="arrow-right"></i></a>
+        <a href="assets/resume.pdf" class="btn btn-secondary" target="_blank" download>Download Resume <i data-lucide="download"></i></a>
+      </div>
+      <div class="hero-socials">
+        <a href="${profile.github}" target="_blank" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="${profile.linkedin}" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="mailto:${profile.email}" class="social-link" aria-label="Email"><i data-lucide="mail"></i></a>
+      </div>
+    `;
+  }
+
+  // 3. Render About
+  const aboutWrapper = document.getElementById('about-grid-wrapper');
+  if (aboutWrapper) {
+    const courseworkList = education.coursework.map(course => `<li class="tech-badge">${course}</li>`).join('');
+    
+    let statsHtml = '';
+    if (stats && stats.length > 0) {
+      const statsListHtml = stats.map(stat => `
+        <div class="glass-card stat-item">
+          <span class="stat-number">${stat.number}</span>
+          <span class="stat-label">${stat.label}</span>
+        </div>
+      `).join('');
+      statsHtml = `<div class="about-stats" style="margin-top: 2rem;">${statsListHtml}</div>`;
+    }
+
+    aboutWrapper.innerHTML = `
+      <div class="glass-card about-info">
+        <h3>Education</h3>
+        <p><strong>${education.school}</strong></p>
+        <p>${education.degree}, ${education.minor}</p>
+        <p style="color: var(--color-secondary); font-weight: 600;">${education.graduation}</p>
+        <div style="margin-top: 1.5rem;">
+          <h4 style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.5rem;">Relevant Coursework:</h4>
+          <ul style="list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            ${courseworkList}
+          </ul>
+        </div>
+      </div>
+      
+      <div class="about-text">
+        <p>${profile.bio}</p>
+        ${statsHtml}
+      </div>
+    `;
+  }
+
+  // 4. Render Experience Timeline
+  const experienceWrapper = document.getElementById('experience-timeline-wrapper');
+  if (experienceWrapper) {
+    experienceWrapper.innerHTML = experience.map((exp, idx) => {
+      const bulletList = exp.bullets.map(b => `<li>${b}</li>`).join('');
+      return `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">${exp.period}</div>
+          <div class="glass-card timeline-content">
+            <h3>${exp.role}</h3>
+            <div class="timeline-company">${exp.company}</div>
+            <ul class="timeline-details">
+              ${bulletList}
+            </ul>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 5. Render Projects
+  const projectsWrapper = document.getElementById('projects-grid-wrapper');
+  if (projectsWrapper) {
+    projectsWrapper.innerHTML = projects.map(project => {
+      const techBadges = project.technologies.map(t => `<li class="tech-badge">${t}</li>`).join('');
+      const awardHtml = project.award ? `<div style="color: var(--color-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase;">${project.award}</div>` : '';
+      
+      return `
+        <div class="glass-card">
+          <div class="project-card" data-categories="${project.categories}">
+            <div class="project-header">
+              <h3>${project.title}</h3>
+              <div class="project-links">
+                <a href="${project.github}" target="_blank" class="project-link" aria-label="GitHub Repository">
+                  <i data-lucide="github"></i>
+                </a>
+              </div>
+            </div>
+            ${awardHtml}
+            <p class="project-desc">${project.description}</p>
+            <ul class="project-tech-list">
+              ${techBadges}
+            </ul>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 6. Render Skills
+  const skillsWrapper = document.getElementById('skills-grid-wrapper');
+  if (skillsWrapper) {
+    const langList = skills.languages.map(l => `<li>${l}</li>`).join('');
+    const techList = skills.technologies.map(t => `<li>${t}</li>`).join('');
+    const dbList = skills.databases.map(d => `<li>${d}</li>`).join('');
+
+    skillsWrapper.innerHTML = `
+      <!-- Languages -->
+      <div class="glass-card skills-card">
+        <h3><i data-lucide="code"></i> Languages</h3>
+        <ul class="skills-list">${langList}</ul>
+      </div>
+      
+      <!-- Technologies -->
+      <div class="glass-card skills-card">
+        <h3><i data-lucide="cpu"></i> Technologies</h3>
+        <ul class="skills-list">${techList}</ul>
+      </div>
+      
+      <!-- Databases -->
+      <div class="glass-card skills-card">
+        <h3><i data-lucide="database"></i> Databases</h3>
+        <ul class="skills-list">${dbList}</ul>
+      </div>
+    `;
+  }
+
+  // 7. Render Contact Details
+  const contactDetailsWrapper = document.getElementById('contact-details-wrapper');
+  if (contactDetailsWrapper) {
+    contactDetailsWrapper.innerHTML = `
+      <h3>Let's Connect</h3>
+      <p style="color: var(--text-muted);">
+        I am actively seeking internship opportunities where I can apply my skills in AI engineering and fullstack development. Feel free to reach out via email or connect with me on socials.
+      </p>
+      
+      <div class="contact-info-list">
+        <a href="mailto:${profile.email}" class="contact-item">
+          <div class="contact-icon"><i data-lucide="mail"></i></div>
+          <div>
+            <span class="form-label" style="margin-bottom: 0;">Email</span>
+            <strong style="color: var(--text-main);">${profile.email}</strong>
+          </div>
+        </a>
+        
+        <a href="${profile.linkedin}" target="_blank" class="contact-item">
+          <div class="contact-icon"><i data-lucide="linkedin"></i></div>
+          <div>
+            <span class="form-label" style="margin-bottom: 0;">LinkedIn</span>
+            <strong style="color: var(--text-main);">linkedin.com/in/${profile.linkedin.split('/').pop()}</strong>
+          </div>
+        </a>
+
+        <a href="${profile.github}" target="_blank" class="contact-item">
+          <div class="contact-icon"><i data-lucide="github"></i></div>
+          <div>
+            <span class="form-label" style="margin-bottom: 0;">GitHub</span>
+            <strong style="color: var(--text-main);">github.com/${profile.github.split('/').pop()}</strong>
+          </div>
+        </a>
+      </div>
+    `;
+  }
+
+  // 8. Render Footer
+  const footerEl = document.getElementById('footer-section');
+  if (footerEl) {
+    footerEl.innerHTML = `
+      <div class="container footer-container">
+        <div class="footer-copy">
+          &copy; ${new Date().getFullYear()} ${profile.name}. Built with passion & AI.
+        </div>
+        <div class="footer-socials">
+          <a href="${profile.github}" target="_blank" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+          <a href="${profile.linkedin}" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+          <a href="mailto:${profile.email}" class="social-link" aria-label="Email"><i data-lucide="mail"></i></a>
+        </div>
+      </div>
+    `;
+  }
+}
 
 /* ==========================================================================
    Navigation Behavior
@@ -185,7 +405,7 @@ function initContactForm() {
         submitBtn.style.background = '';
       }, 3000);
       
-      // Native modern Alert banner simulation
+      // Native alert banner simulation
       showToast("Thank you! Your message was sent successfully. I'll get back to you shortly.");
     }, 1500);
   });
@@ -233,16 +453,18 @@ function showToast(message) {
    Canvas Interactive Particle Background
    ========================================================================== */
 function initCanvasBackground() {
-  const canvas = document.createElement('canvas');
-  canvas.id = 'bg-canvas';
-  canvas.style.position = 'fixed';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  canvas.style.zIndex = '-5';
-  canvas.style.pointerEvents = 'none';
-  document.body.appendChild(canvas);
+  const canvas = document.getElementById('bg-canvas') || document.createElement('canvas');
+  if (!canvas.parentNode) {
+    canvas.id = 'bg-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-5';
+    canvas.style.pointerEvents = 'none';
+    document.body.appendChild(canvas);
+  }
 
   const ctx = canvas.getContext('2d');
   let animationFrameId;
