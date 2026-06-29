@@ -34,8 +34,12 @@
   scroll-behavior: smooth;
 }
 
-body {
+html {
   background-color: var(--bg-dark);
+}
+
+body {
+  background-color: transparent;
   color: var(--text-main);
   font-family: var(--font-primary);
   font-weight: 300; /* Thin, elegant text font */
