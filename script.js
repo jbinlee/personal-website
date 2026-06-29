@@ -451,10 +451,10 @@ function initCanvasBackground() {
   const ctx = canvas.getContext('2d');
   let animationFrameId;
 
-  // Particle configuration
+  // Particle configuration - expanded density for rich field
   let particles = [];
-  const particleCount = 55;
-  const connectionDistance = 110;
+  const particleCount = 135; // Increased from 55 to 135
+  const connectionDistance = 115;
   
   // Mouse position tracker
   const mouse = {
@@ -507,9 +507,9 @@ function initCanvasBackground() {
       this.baseVy = -Math.random() * 0.15 - 0.05; // Gentle float upwards (Antigravity)
       this.vx = this.baseVx;
       this.vy = this.baseVy;
-      this.size = Math.random() * 2 + 1;
-      // Muted slate gray/white particles to match minimal theme
-      this.color = `rgba(226, 228, 233, ${Math.random() * 0.18 + 0.05})`;
+      this.size = Math.random() * 2 + 1; // 1px to 3px
+      // White particles with clear but elegant opacity
+      this.color = `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.25})`; // Opacity 0.25 - 0.55
     }
 
     draw() {
@@ -597,7 +597,7 @@ function initCanvasBackground() {
       p.draw();
     });
 
-    // Draw lines between nearby particles
+    // Draw minimalist lines between nearby particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -605,11 +605,12 @@ function initCanvasBackground() {
         const dist = Math.hypot(dx, dy);
 
         if (dist < connectionDistance) {
-          const alpha = (1 - dist / connectionDistance) * 0.08;
+          // Connection lines are also brighter white
+          const alpha = (1 - dist / connectionDistance) * 0.14;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(226, 228, 233, ${alpha})`;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
