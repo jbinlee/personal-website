@@ -49,11 +49,6 @@ function renderPortfolio() {
         <a href="#projects" class="btn btn-primary">View My Work <i data-lucide="arrow-right"></i></a>
         <a href="assets/resume.pdf" class="btn btn-secondary" target="_blank" download>Download Resume <i data-lucide="download"></i></a>
       </div>
-      <div class="hero-socials">
-        <a href="${profile.github}" target="_blank" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
-        <a href="${profile.linkedin}" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-        <a href="mailto:${profile.email}" class="social-link" aria-label="Email"><i data-lucide="mail"></i></a>
-      </div>
     `;
   }
 
@@ -177,7 +172,7 @@ function renderPortfolio() {
   if (contactDetailsWrapper) {
     contactDetailsWrapper.innerHTML = `
       <h3>Let's Connect</h3>
-      <p style="color: var(--text-muted);">
+      <p style="color: var(--text-muted); font-weight: 300;">
         I am actively seeking internship opportunities where I can apply my skills in AI engineering and fullstack development. Feel free to reach out via email or connect with me on socials.
       </p>
       
@@ -185,7 +180,6 @@ function renderPortfolio() {
         <a href="mailto:${profile.email}" class="contact-item">
           <div class="contact-icon"><i data-lucide="mail"></i></div>
           <div>
-            <span class="form-label" style="margin-bottom: 0;">Email</span>
             <strong style="color: var(--text-main);">${profile.email}</strong>
           </div>
         </a>
@@ -193,7 +187,6 @@ function renderPortfolio() {
         <a href="${profile.linkedin}" target="_blank" class="contact-item">
           <div class="contact-icon"><i data-lucide="linkedin"></i></div>
           <div>
-            <span class="form-label" style="margin-bottom: 0;">LinkedIn</span>
             <strong style="color: var(--text-main);">linkedin.com/in/${profile.linkedin.split('/').pop()}</strong>
           </div>
         </a>
@@ -201,7 +194,6 @@ function renderPortfolio() {
         <a href="${profile.github}" target="_blank" class="contact-item">
           <div class="contact-icon"><i data-lucide="github"></i></div>
           <div>
-            <span class="form-label" style="margin-bottom: 0;">GitHub</span>
             <strong style="color: var(--text-main);">github.com/${profile.github.split('/').pop()}</strong>
           </div>
         </a>
@@ -261,7 +253,7 @@ function initNavbar() {
     });
   });
 
-  // Mobile Menu Toggle (Simplified)
+  // Mobile Menu Toggle
   const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
   const navMenu = document.querySelector('.nav-menu');
 
@@ -270,7 +262,6 @@ function initNavbar() {
       navMenu.classList.toggle('active');
       mobileMenuBtn.classList.toggle('open');
       
-      // Basic styling override for mobile menu toggled state
       if (navMenu.classList.contains('active')) {
         navMenu.style.display = 'flex';
         navMenu.style.flexDirection = 'column';
@@ -278,7 +269,7 @@ function initNavbar() {
         navMenu.style.top = '100%';
         navMenu.style.left = '0';
         navMenu.style.width = '100%';
-        navMenu.style.background = 'hsla(230, 25%, 6%, 0.95)';
+        navMenu.style.background = 'rgba(40, 44, 52, 0.98)';
         navMenu.style.backdropFilter = 'blur(10px)';
         navMenu.style.padding = '2rem';
         navMenu.style.borderBottom = '1px solid var(--border-light)';
@@ -289,7 +280,6 @@ function initNavbar() {
       }
     });
 
-    // Close menu when link is clicked
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -304,12 +294,11 @@ function initNavbar() {
    Scroll-Triggered Reveal Animations
    ========================================================================== */
 function initScrollAnimations() {
-  const animatedElements = document.querySelectorAll('.glass-card, .timeline-item, .hero-content, .hero-visual, .section-header');
+  const animatedElements = document.querySelectorAll('.glass-card, .timeline-item, .hero-content, .section-header');
   
-  // Set initial hidden state styles dynamically
   animatedElements.forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
+    el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
   });
 
@@ -343,7 +332,6 @@ function initProjectFiltering() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Toggle active class
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -363,7 +351,7 @@ function initProjectFiltering() {
           }, 50);
         } else {
           parentCard.style.opacity = '0';
-          parentCard.style.transform = 'scale(0.9)';
+          parentCard.style.transform = 'scale(0.95)';
           setTimeout(() => {
             parentCard.style.display = 'none';
           }, 300);
@@ -386,71 +374,65 @@ function initContactForm() {
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
 
-    // Premium button loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="badge-pulse" style="margin-right: 0.5rem; display: inline-block;"></span> Sending...`;
 
-    // Simulate network latency (1.5s) and trigger a gorgeous success notice
     setTimeout(() => {
       submitBtn.innerHTML = `✓ Message Sent!`;
-      submitBtn.style.background = 'linear-gradient(135deg, hsl(180, 80%, 40%) 0%, hsl(180, 80%, 30%) 100%)';
+      submitBtn.style.backgroundColor = 'var(--color-secondary)';
+      submitBtn.style.color = 'var(--bg-dark)';
       
-      // Reset form
       form.reset();
 
-      // Reset button after 3 seconds
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
-        submitBtn.style.background = '';
+        submitBtn.style.backgroundColor = '';
+        submitBtn.style.color = '';
       }, 3000);
       
-      // Native alert banner simulation
-      showToast("Thank you! Your message was sent successfully. I'll get back to you shortly.");
+      showToast("Thank you! Your message was sent successfully.");
     }, 1500);
   });
 }
 
-// Simple Toast Notification
 function showToast(message) {
   const toast = document.createElement('div');
   toast.innerText = message;
   toast.style.position = 'fixed';
   toast.style.bottom = '2rem';
   toast.style.right = '2rem';
-  toast.style.background = 'var(--bg-card-hover)';
-  toast.style.border = '1px solid var(--color-secondary)';
+  toast.style.background = 'rgba(40, 44, 52, 0.95)';
+  toast.style.border = '1px solid var(--color-primary)';
   toast.style.color = 'var(--text-main)';
-  toast.style.padding = '1rem 1.5rem';
-  toast.style.borderRadius = '12px';
-  toast.style.boxShadow = '0 10px 30px rgba(0, 242, 254, 0.2)';
+  toast.style.padding = '0.75rem 1.25rem';
+  toast.style.borderRadius = '8px';
+  toast.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
   toast.style.zIndex = '1000';
   toast.style.fontFamily = 'var(--font-primary)';
-  toast.style.fontSize = '0.95rem';
-  toast.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+  toast.style.fontSize = '0.9rem';
+  toast.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
   toast.style.opacity = '0';
-  toast.style.transform = 'translateY(20px)';
+  toast.style.transform = 'translateY(15px)';
 
   document.body.appendChild(toast);
 
-  // Trigger animation frame
   setTimeout(() => {
     toast.style.opacity = '1';
     toast.style.transform = 'translateY(0)';
   }, 100);
 
-  // Hide after 4 seconds
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.style.transform = 'translateY(20px)';
+    toast.style.transform = 'translateY(15px)';
     setTimeout(() => {
       document.body.removeChild(toast);
-    }, 500);
-  }, 4000);
+    }, 400);
+  }, 3500);
 }
 
 /* ==========================================================================
-   Canvas Interactive Particle Background
+   Canvas Antigravity Interactive Particle Physics Background
    ========================================================================== */
 function initCanvasBackground() {
   const canvas = document.getElementById('bg-canvas') || document.createElement('canvas');
@@ -471,14 +453,18 @@ function initCanvasBackground() {
 
   // Particle configuration
   let particles = [];
-  const particleCount = 45;
-  const connectionDistance = 120;
+  const particleCount = 55;
+  const connectionDistance = 110;
   
   // Mouse position tracker
   const mouse = {
     x: null,
     y: null,
-    radius: 150
+    vx: 0,
+    vy: 0,
+    lastX: null,
+    lastY: null,
+    radius: 180 // Area of influence
   };
 
   // Adjust canvas size
@@ -490,15 +476,25 @@ function initCanvasBackground() {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Capture mouse coordinates
+  // Capture mouse coordinates and calculate velocity
   window.addEventListener('mousemove', (e) => {
+    if (mouse.lastX !== null && mouse.lastY !== null) {
+      mouse.vx = e.clientX - mouse.lastX;
+      mouse.vy = e.clientY - mouse.lastY;
+    }
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+    mouse.lastX = e.clientX;
+    mouse.lastY = e.clientY;
   });
 
   window.addEventListener('mouseout', () => {
     mouse.x = null;
     mouse.y = null;
+    mouse.vx = 0;
+    mouse.vy = 0;
+    mouse.lastX = null;
+    mouse.lastY = null;
   });
 
   // Particle Class Definition
@@ -506,10 +502,14 @@ function initCanvasBackground() {
     constructor() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
+      // Soft drift base speeds
+      this.baseVx = (Math.random() - 0.5) * 0.25;
+      this.baseVy = -Math.random() * 0.2 - 0.05; // Gentle float upwards (Antigravity)
+      this.vx = this.baseVx;
+      this.vy = this.baseVy;
       this.size = Math.random() * 2 + 1;
-      this.color = Math.random() > 0.5 ? 'rgba(168, 85, 247, 0.25)' : 'rgba(0, 242, 254, 0.2)';
+      // Minimal white/gray slate particles to match typography theme
+      this.color = `rgba(226, 228, 233, ${Math.random() * 0.15 + 0.05})`;
     }
 
     draw() {
@@ -520,26 +520,51 @@ function initCanvasBackground() {
     }
 
     update() {
-      // Re-route if hitting edges
-      if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
-      if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+      // Re-route if hitting horizontal bounds
+      if (this.x < 0 || this.x > canvas.width) {
+        this.vx = -this.vx;
+        this.baseVx = -this.baseVx;
+      }
+      // Reset to bottom if floating past the top
+      if (this.y < -10) {
+        this.y = canvas.height + 10;
+        this.x = Math.random() * canvas.width;
+        this.vx = this.baseVx;
+        this.vy = this.baseVy;
+      }
 
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // Mouse interactive push
+      // Mouse interactive physics (Antigravity repulsion & drag)
       if (mouse.x !== null && mouse.y !== null) {
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
         const distance = Math.hypot(dx, dy);
         
         if (distance < mouse.radius) {
-          const force = (mouse.radius - distance) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          this.x += Math.cos(angle) * force * 1.5;
-          this.y += Math.sin(angle) * force * 1.5;
+          // Normalize direction
+          const ndx = dx / distance;
+          const ndy = dy / distance;
+          
+          // Repulsion force: stronger as you get closer (curved exponential decay)
+          const pushForce = Math.pow((mouse.radius - distance) / mouse.radius, 2) * 1.8;
+          
+          // Apply repulsion acceleration
+          this.vx += ndx * pushForce * 0.25;
+          this.vy += ndy * pushForce * 0.25;
+
+          // Drag force: follow the mouse's velocity movement slightly
+          const dragFactor = (mouse.radius - distance) / mouse.radius;
+          this.vx += mouse.vx * dragFactor * 0.05;
+          this.vy += mouse.vy * dragFactor * 0.05;
         }
       }
+
+      // Physics integration: position + velocity
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Friction / Dampening: particles decelerate back to their base drift
+      this.vx = this.vx * 0.96 + this.baseVx * 0.04;
+      this.vy = this.vy * 0.96 + this.baseVy * 0.04;
     }
   }
 
@@ -555,12 +580,16 @@ function initCanvasBackground() {
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // Decay mouse speed in case it stops moving
+    mouse.vx *= 0.9;
+    mouse.vy *= 0.9;
+
     particles.forEach(p => {
       p.update();
       p.draw();
     });
 
-    // Draw lines between nearby particles
+    // Draw minimalist lines between nearby particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -568,13 +597,13 @@ function initCanvasBackground() {
         const dist = Math.hypot(dx, dy);
 
         if (dist < connectionDistance) {
-          // Fade line color based on proximity
-          const alpha = (1 - dist / connectionDistance) * 0.12;
+          // Fade connection line as particles drift further
+          const alpha = (1 - dist / connectionDistance) * 0.08;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = `rgba(226, 228, 233, ${alpha})`;
+          ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       }
