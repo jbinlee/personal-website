@@ -1,10 +1,10 @@
-/* Import Inter with light, regular, and medium weights */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+/* Import Geist with light, regular, and medium weights */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap');
 
 /* CSS Modern Reset & Variable Declarations */
 :root {
-  --font-primary: 'Inter', sans-serif;
-  --font-display: 'Inter', sans-serif;
+  --font-primary: 'Geist', sans-serif;
+  --font-display: 'Geist', sans-serif;
 
   /* Modest, balanced color palette (Not too dark, not too light) */
   --bg-dark: hsl(222, 11%, 18%);           /* #282c34 - Balanced Charcoal/Slate */
