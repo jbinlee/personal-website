@@ -298,11 +298,31 @@ header.scrolled .nav-container {
   line-height: 1.75;
 }
 
-.hero-btns {
+.hero-minimal-links {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 0;
-  justify-content: center;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+.minimal-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.minimal-link:hover {
+  color: var(--text-main);
+  border-bottom-color: var(--color-primary);
+}
+
+.link-separator {
+  color: var(--text-dim);
+  font-weight: 300;
 }
 
 /* Button styles */

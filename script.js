@@ -33,21 +33,17 @@ function renderPortfolio() {
     logoEl.innerHTML = `${profile.name}<span class="logo-dot"></span>`;
   }
 
-  // 2. Render Hero
   const heroWrapper = document.getElementById('hero-content-wrapper');
   if (heroWrapper) {
-    let recruitingHtml = '';
-    if (profile.recruitingMode) {
-      recruitingHtml = `<div class="badge-recruiting"><span class="badge-pulse"></span> ${profile.recruitingStatus}</div>`;
-    }
-    
     heroWrapper.innerHTML = `
-      ${recruitingHtml}
-      <h1>Building the Future of <span class="highlight">Intelligent Software</span></h1>
+      <h1>Hi, I'm <span class="highlight">${profile.name}</span></h1>
       <p class="hero-subtitle">${profile.subtitle}</p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">View My Work <i data-lucide="arrow-right"></i></a>
-        <a href="assets/resume.pdf" class="btn btn-secondary" target="_blank" download>Download Resume <i data-lucide="download"></i></a>
+      <div class="hero-minimal-links">
+        <a href="mailto:${profile.email}" class="minimal-link">Email</a>
+        <span class="link-separator">/</span>
+        <a href="${profile.github}" target="_blank" class="minimal-link">GitHub</a>
+        <span class="link-separator">/</span>
+        <a href="${profile.linkedin}" target="_blank" class="minimal-link">LinkedIn</a>
       </div>
     `;
   }
