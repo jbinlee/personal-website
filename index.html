@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Justin Lee - AI Engineer & Computer Science student at Rice University. Portfolio showcasing software engineering experience, hackathon-winning AI projects, and contact info for recruiting.">
+  <meta name="keywords" content="Justin Lee, AI Engineer, Software Engineer, Rice University, Computer Science, LangChain, FastAPI, React, Next.js, HackRice, Internship">
+  <meta name="author" content="Justin Lee">
+  <title>Justin Lee | AI Engineer & Fullstack Developer</title>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="container nav-container">
+      <a href="#home" class="logo">
+        Justin Lee<span class="logo-dot"></span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge-recruiting">
+          <span class="badge-pulse"></span> Recruiting: Seeking Internships
+        </div>
+        <h1>
+          Building the Future of <span class="highlight">Intelligent Software</span>
+        </h1>
+        <p class="hero-subtitle">
+          AI Engineer & Computer Science Student at Rice University. Specialized in LLM orchestration, Next.js development, FastAPI backends, and semantic search.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">
+            View My Work <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="assets/resume.pdf" class="btn btn-secondary" target="_blank" download>
+            Download Resume <i data-lucide="download"></i>
+          </a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://github.com/jbinlee" target="_blank" class="social-link" aria-label="GitHub">
+            <i data-lucide="github"></i>
+          </a>
+          <a href="https://linkedin.com/in/jkl565" target="_blank" class="social-link" aria-label="LinkedIn">
+            <i data-lucide="linkedin"></i>
+          </a>
+          <a href="mailto:jl537@rice.edu" class="social-link" aria-label="Email">
+            <i data-lucide="mail"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="avatar-wrapper">
+          <img src="assets/avatar.jpg" alt="Justin Lee Avatar" class="avatar-img">
+          <div class="avatar-decoration deco-1" title="AI & Machine Learning">
+            <i data-lucide="brain" style="color: var(--color-primary);"></i>
+          </div>
+          <div class="avatar-decoration deco-2" title="Fullstack Coding">
+            <i data-lucide="code-2" style="color: var(--color-secondary);"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <h2>About Me</h2>
+        <p>A brief look into my academic background, career philosophy, and highlights.</p>
+      </div>
+      
+      <div class="about-grid">
+        <div class="glass-card about-info">
+          <h3>Education</h3>
+          <p><strong>Rice University</strong> (Houston, TX)</p>
+          <p>Bachelor of Science in Computer Science, Minor in Data Science</p>
+          <p style="color: var(--color-secondary); font-weight: 600;">Expected Graduation: May 2028</p>
+          <div style="margin-top: 1.5rem;">
+            <h4 style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.5rem;">Relevant Coursework:</h4>
+            <ul style="list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              <li class="tech-badge">Data Structures</li>
+              <li class="tech-badge">Algorithms</li>
+              <li class="tech-badge">Object-Oriented Programming</li>
+              <li class="tech-badge">Computer Architecture</li>
+              <li class="tech-badge">Linear Algebra</li>
+              <li class="tech-badge">Multivariable Calculus</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="about-text">
+          <p>
+            I am a builder who loves bridging the gap between cutting-edge Artificial Intelligence and robust software engineering. Whether orchestrating multi-agent systems using LangChain, fine-tuning LLM prompts, or architecting modular fullstack backends with FastAPI and PostgreSQL, I focus on building products that solve real needs.
+          </p>
+          <p>
+            Currently, I work as an AI Engineer at OpenStax, leading a team of developers to build interactive education platforms powered by AI. I thrive in collaborative environments, hackathons, and projects that challenge me to learn new technologies quickly.
+          </p>
+          
+          <div class="about-stats" style="margin-top: 2rem;">
+            <div class="glass-card stat-item">
+              <span class="stat-number">2</span>
+              <span class="stat-label">HackRice Awards</span>
+            </div>
+            <div class="glass-card stat-item">
+              <span class="stat-number">1st/2nd</span>
+              <span class="stat-label">Hackathon Placements</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header">
+        <h2>Professional Experience</h2>
+        <p>My work history leading engineering teams and building production-grade software.</p>
+      </div>
+      
+      <div class="experience-timeline">
+        <!-- OpenStax -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">May 2026 - Present</div>
+          <div class="glass-card timeline-content">
+            <h3>AI Engineer</h3>
+            <div class="timeline-company">OpenStax</div>
+            <ul class="timeline-details">
+              <li>Led 5 engineers in development of an interactive branching-scenario platform from schema design to deployed UI, generating 50+ nursing education scenarios.</li>
+              <li>Built an automated ingestion pipeline (BeautifulSoup, markdownify) that parsed 5 OpenStax textbooks (1,000+ pages each) into structured Markdown, cutting content prep time from 100+ hours to minutes.</li>
+              <li>Designed the system to run on either Claude or Gemini interchangeably and tuned prompts so generated content followed formatting standards, cutting out-of-spec outputs by 80%.</li>
+              <li>Architected a Next.js + FastAPI + PostgreSQL stack modeling narrative logic as a directed graph, with React components rendering and editing AI-generated JSON nodes in real time.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Rice Digital Health -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Nov 2025 - Mar 2026</div>
+          <div class="glass-card timeline-content">
+            <h3>Software Engineer</h3>
+            <div class="timeline-company">Rice University Digital Health Initiative</div>
+            <ul class="timeline-details">
+              <li>Built an MVP marketplace matching undergraduate, graduate, and PhD students to medical research projects with layered eligibility, skill tags, and relevance ranking.</li>
+              <li>Designed a structured intake that turns brief project inputs into conversion-optimized opportunity listings with clear scope, contact, and timelines, improving applicant quality.</li>
+              <li>Implemented role-based access, candidate profiles, and fast search/filter pipelines to surface both short- and long-term projects and accelerate staffing across labs.</li>
+              <li>Partnered with a Rice professor and Houston Methodist stakeholders to define the roadmap; MVP launched with a committed client pipeline providing real users and immediate adoption signals.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Showcase Section -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <h2>Selected Projects</h2>
+        <p>Explore some of my hackathon-winning and academic projects.</p>
+      </div>
+      
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="ai">AI / ML</button>
+        <button class="filter-btn" data-filter="fullstack">Fullstack</button>
+      </div>
+      
+      <div class="projects-grid">
+        <!-- OwlConnect -->
+        <div class="glass-card">
+          <div class="project-card" data-categories="ai fullstack">
+            <div class="project-header">
+              <h3>OwlConnect</h3>
+              <div class="project-links">
+                <a href="https://github.com/jbinlee/owlconnect" target="_blank" class="project-link" aria-label="GitHub Repository">
+                  <i data-lucide="github"></i>
+                </a>
+              </div>
+            </div>
+            <div style="color: var(--color-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase;">
+              🏆 2nd Place Overall @ HackRice (100+ Teams)
+            </div>
+            <p class="project-desc">
+              An AI-powered mentorship platform for Rice University students matching academic profiles to professional trajectories using All-MiniLM-L6-v2 vector embeddings and a LangChain multi-agent negotiation system to optimize match quality.
+            </p>
+            <ul class="project-tech-list">
+              <li class="tech-badge">LangChain</li>
+              <li class="tech-badge">FastAPI</li>
+              <li class="tech-badge">MongoDB</li>
+              <li class="tech-badge">Next.js</li>
+              <li class="tech-badge">WebSockets</li>
+              <li class="tech-badge">MCP</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- HootPlanner -->
+        <div class="glass-card">
+          <div class="project-card" data-categories="ai fullstack">
+            <div class="project-header">
+              <h3>HootPlanner</h3>
+              <div class="project-links">
+                <a href="https://github.com/jbinlee/hootplanner" target="_blank" class="project-link" aria-label="GitHub Repository">
+                  <i data-lucide="github"></i>
+                </a>
+              </div>
+            </div>
+            <div style="color: var(--color-primary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase;">
+              🏆 1st Place Overall @ HackRice (100+ Teams)
+            </div>
+            <p class="project-desc">
+              An AI-powered academic course recommendation engine that pre-processes catalog data using Pandas, creates 384-dimensional embeddings via all-MiniLM-L12-v2, and utilizes LanceDB for high-speed semantic search over student preferences.
+            </p>
+            <ul class="project-tech-list">
+              <li class="tech-badge">React</li>
+              <li class="tech-badge">TypeScript</li>
+              <li class="tech-badge">FastAPI</li>
+              <li class="tech-badge">Pandas</li>
+              <li class="tech-badge">LanceDB</li>
+              <li class="tech-badge">Vector Embeddings</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <h2>Skills & Technologies</h2>
+        <p>My technical toolbelt for engineering scalable backend pipelines and dynamic frontends.</p>
+      </div>
+      
+      <div class="skills-grid">
+        <!-- Languages -->
+        <div class="glass-card skills-card">
+          <h3><i data-lucide="code"></i> Languages</h3>
+          <ul class="skills-list">
+            <li>Python</li>
+            <li>TypeScript</li>
+            <li>JavaScript</li>
+            <li>Java</li>
+            <li>C</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        
+        <!-- Technologies -->
+        <div class="glass-card skills-card">
+          <h3><i data-lucide="cpu"></i> Technologies</h3>
+          <ul class="skills-list">
+            <li>React</li>
+            <li>Next.js</li>
+            <li>FastAPI</li>
+            <li>Node.js</li>
+            <li>Pandas</li>
+            <li>NumPy</li>
+            <li>LangChain</li>
+            <li>Hugging Face</li>
+          </ul>
+        </div>
+        
+        <!-- Databases -->
+        <div class="glass-card skills-card">
+          <h3><i data-lucide="database"></i> Databases</h3>
+          <ul class="skills-list">
+            <li>PostgreSQL</li>
+            <li>MongoDB</li>
+            <li>MySQL</li>
+            <li>LanceDB</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Get In Touch</h2>
+        <p>Have an open internship role, a project idea, or just want to chat? Drop me a message.</p>
+      </div>
+      
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Let's Connect</h3>
+          <p style="color: var(--text-muted);">
+            I am actively seeking internship opportunities where I can apply my skills in AI engineering and fullstack development. Feel free to reach out via email or connect with me on socials.
+          </p>
+          
+          <div class="contact-info-list">
+            <a href="mailto:jl537@rice.edu" class="contact-item">
+              <div class="contact-icon">
+                <i data-lucide="mail"></i>
+              </div>
+              <div>
+                <span class="form-label" style="margin-bottom: 0;">Email</span>
+                <strong style="color: var(--text-main);">jl537@rice.edu</strong>
+              </div>
+            </a>
+            
+            <a href="https://linkedin.com/in/jkl565" target="_blank" class="contact-item">
+              <div class="contact-icon">
+                <i data-lucide="linkedin"></i>
+              </div>
+              <div>
+                <span class="form-label" style="margin-bottom: 0;">LinkedIn</span>
+                <strong style="color: var(--text-main);">linkedin.com/in/jkl565</strong>
+              </div>
+            </a>
+
+            <a href="https://github.com/jbinlee" target="_blank" class="contact-item">
+              <div class="contact-icon">
+                <i data-lucide="github"></i>
+              </div>
+              <div>
+                <span class="form-label" style="margin-bottom: 0;">GitHub</span>
+                <strong style="color: var(--text-main);">github.com/jbinlee</strong>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <div class="glass-card contact-form-card">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="your.email@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-control" placeholder="Hi Justin, we'd love to chat about..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Send Message <i data-lucide="send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-copy">
+        &copy; 2026 Justin Lee. Built with passion & AI.
+      </div>
+      <div class="footer-socials">
+        <a href="https://github.com/jbinlee" target="_blank" class="social-link" aria-label="GitHub">
+          <i data-lucide="github"></i>
+        </a>
+        <a href="https://linkedin.com/in/jkl565" target="_blank" class="social-link" aria-label="LinkedIn">
+          <i data-lucide="linkedin"></i>
+        </a>
+        <a href="mailto:jl537@rice.edu" class="social-link" aria-label="Email">
+          <i data-lucide="mail"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Controller Script -->
+  <script src="script.js"></script>
+  <script>
+    // Initialize lucide icons at load-time
+    lucide.createIcons();
+  </script>
+</body>
+</html>
