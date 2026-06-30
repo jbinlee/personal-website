@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Justin Lee - AI Engineer & Computer Science student at Rice University. Portfolio showcasing software engineering experience, hackathon-winning AI projects, and contact info for recruiting.">
-  <meta name="keywords" content="Justin Lee, AI Engineer, Software Engineer, Rice University, Computer Science, LangChain, FastAPI, React, Next.js, HackRice, Internship">
+  <meta name="description"
+    content="I build AI apps, full-stack products, and solve problems. Junior @ Rice University.">
+  <meta name="keywords"
+    content="Justin Lee, AI Engineer, Software Engineer, Rice University, Computer Science, LangChain, FastAPI, React, Next.js, HackRice, Internship">
   <meta name="author" content="Justin Lee">
   <title>Justin Lee | AI Engineer & Fullstack Developer</title>
-  
+
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="style.css">
-  
+
+  <!-- Devicon CDN for brand & tech icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Global Error Handler for Debugging -->
+  <script>
+    window.onerror = function (message, source, lineno, colno, error) {
+      const errDiv = document.createElement('div');
+      errDiv.style.position = 'fixed';
+      errDiv.style.top = '0';
+      errDiv.style.left = '0';
+      errDiv.style.width = '100%';
+      errDiv.style.background = 'rgba(220, 50, 50, 0.95)';
+      errDiv.style.color = 'white';
+      errDiv.style.padding = '1rem';
+      errDiv.style.zIndex = '99999';
+      errDiv.style.fontFamily = 'monospace';
+      errDiv.style.fontSize = '0.9rem';
+      errDiv.style.lineHeight = '1.4';
+      errDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+      errDiv.innerHTML = '<strong>JavaScript Error:</strong> ' + message + '<br><small>at ' + source + ':' + lineno + ':' + colno + '</small>';
+      document.body.appendChild(errDiv);
+      return false;
+    };
+  </script>
+
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
 
   <!-- Navigation Header -->
@@ -24,7 +53,6 @@
       </a>
       <ul class="nav-menu">
         <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -47,28 +75,13 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <div class="section-header">
-        <h2>About Me</h2>
-        <p>A brief look into my academic background, career philosophy, and highlights.</p>
-      </div>
-      
-      <div class="about-grid" id="about-grid-wrapper">
-        <!-- Rendered dynamically from data.js -->
-      </div>
-    </div>
-  </section>
-
   <!-- Experience Section -->
   <section id="experience">
     <div class="container">
       <div class="section-header">
         <h2>Professional Experience</h2>
-        <p>My work history leading engineering teams and building production-grade software.</p>
       </div>
-      
+
       <div class="experience-timeline" id="experience-timeline-wrapper">
         <!-- Rendered dynamically from data.js -->
       </div>
@@ -82,13 +95,13 @@
         <h2>Selected Projects</h2>
         <p>Explore some of my hackathon-winning and academic projects.</p>
       </div>
-      
+
       <div class="project-filters">
         <button class="filter-btn active" data-filter="all">All Projects</button>
         <button class="filter-btn" data-filter="ai">AI / ML</button>
         <button class="filter-btn" data-filter="fullstack">Fullstack</button>
       </div>
-      
+
       <div class="projects-grid" id="projects-grid-wrapper">
         <!-- Rendered dynamically from data.js -->
       </div>
@@ -102,7 +115,7 @@
         <h2>Skills & Technologies</h2>
         <p>My technical toolbelt for engineering scalable backend pipelines and dynamic frontends.</p>
       </div>
-      
+
       <div class="skills-grid" id="skills-grid-wrapper">
         <!-- Rendered dynamically from data.js -->
       </div>
@@ -119,4 +132,5 @@
   <!-- Controller Script -->
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -174,6 +174,7 @@ header.scrolled .nav-container {
   display: flex;
   list-style: none;
   gap: 2rem;
+  margin-left: auto;
 }
 
 .nav-link {
@@ -274,6 +275,28 @@ header.scrolled .nav-container {
   100% { transform: scale(0.9); opacity: 1; }
 }
 
+.hero-badges {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 .hero-content h1 {
   font-size: 3rem;
   line-height: 1.3;
@@ -284,9 +307,11 @@ header.scrolled .nav-container {
 }
 
 .hero-content h1 .highlight {
-  color: var(--text-main);
-  font-weight: 400; /* Muted contrast highlight */
-  border-bottom: 1px dashed var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+  border-bottom: none;
 }
 
 .hero-subtitle {
@@ -315,9 +340,24 @@ header.scrolled .nav-container {
   padding-bottom: 2px;
 }
 
-.minimal-link:hover {
-  color: var(--text-main);
-  border-bottom-color: var(--color-primary);
+.hero-minimal-links a[href^="mailto:"]:hover {
+  color: #ea4335;
+  border-bottom-color: #ea4335;
+}
+
+.hero-minimal-links a[href*="github.com"]:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+.hero-minimal-links a[href*="linkedin.com"]:hover {
+  color: #0a66c2;
+  border-bottom-color: #0a66c2;
+}
+
+.hero-minimal-links a[href*="resume.pdf"]:hover {
+  color: var(--color-secondary);
+  border-bottom-color: var(--color-secondary);
 }
 
 .link-separator {
@@ -473,7 +513,8 @@ header.scrolled .nav-container {
 .timeline-content h3 {
   font-size: 1.2rem;
   margin-bottom: 0.25rem;
-  font-weight: 400; /* Elegant and thin headers */
+  font-weight: 500;
+  color: var(--color-primary);
 }
 
 .timeline-company {
@@ -550,7 +591,8 @@ header.scrolled .nav-container {
 
 .project-header h3 {
   font-size: 1.2rem;
-  font-weight: 400; /* Less fat */
+  font-weight: 500;
+  color: var(--color-secondary);
 }
 
 .project-links {
@@ -576,6 +618,29 @@ header.scrolled .nav-container {
   margin-bottom: 1.5rem;
   flex-grow: 1;
   line-height: 1.65;
+}
+
+.project-details {
+  list-style: none;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.project-details li {
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.project-details li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
 }
 
 .project-tech-list {
@@ -622,23 +687,69 @@ header.scrolled .nav-container {
 .skills-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 1rem;
   list-style: none;
+  padding-top: 0.5rem;
 }
 
 .skills-list li {
-  background: rgba(255, 255, 255, 0.01);
+  background: var(--bg-card);
   border: 1px solid var(--border-light);
-  border-radius: 4px;
-  padding: 0.35rem 0.7rem;
-  font-size: 0.8rem;
-  font-weight: 300;
+  border-radius: 8px;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: var(--text-muted);
   transition: var(--transition-fast);
+  cursor: default;
+  position: relative;
+}
+
+.skills-list li i {
+  display: inline-block;
+  line-height: 1;
+}
+
+.skills-list li .skill-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .skills-list li:hover {
   border-color: var(--color-primary);
-  transform: translateY(-1px);
+  color: var(--text-main);
+  background: var(--bg-card-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px var(--color-primary-glow);
+}
+
+/* Custom Tooltip on Hover */
+.skills-list li::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(30, 34, 42, 0.95);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-fast);
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.skills-list li:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Contact / Call-to-action */
@@ -748,25 +859,55 @@ textarea.form-control {
 /* Footer Section */
 footer {
   border-top: 1px solid var(--border-light);
-  padding: 2rem 0;
+  padding: 3rem 0;
   background-color: hsl(220, 11%, 15%);
 }
 
 .footer-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.footer-contact {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  font-weight: 300;
+}
+
+.footer-contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.footer-contact a:hover {
+  color: var(--color-primary);
+}
+
+.footer-contact .separator {
+  color: var(--text-dim);
 }
 
 .footer-copy {
   color: var(--text-dim);
   font-size: 0.8rem;
   font-weight: 300;
+  margin-top: 0.5rem;
 }
 
 .footer-socials {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .footer-socials .social-link {
@@ -784,9 +925,15 @@ footer {
   transition: var(--transition-fast);
 }
 
-.footer-socials .social-link:hover {
-  color: var(--text-main);
-  border-color: var(--text-muted);
+.footer-socials .social-link[aria-label="LinkedIn"]:hover {
+  color: #0a66c2;
+  border-color: #0a66c2;
+  transform: translateY(-1px);
+}
+
+.footer-socials .social-link[aria-label="GitHub"]:hover {
+  color: #ffffff;
+  border-color: #ffffff;
   transform: translateY(-1px);
 }
 

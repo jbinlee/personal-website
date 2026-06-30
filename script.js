@@ -17,8 +17,45 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   Dynamic Rendering System
+   Dynamic Rendering System & Icon Mappings
    ========================================================================== */
+const SKILL_ICONS = {
+  "python": { type: "devicon", value: "devicon-python-plain" },
+  "typescript": { type: "devicon", value: "devicon-typescript-plain" },
+  "javascript": { type: "devicon", value: "devicon-javascript-plain" },
+  "java": { type: "devicon", value: "devicon-java-plain" },
+  "c": { type: "devicon", value: "devicon-c-plain" },
+  "sql": { type: "devicon", value: "devicon-postgresql-plain" },
+
+  "react": { type: "devicon", value: "devicon-react-original" },
+  "next.js": { type: "devicon", value: "devicon-nextjs-plain" },
+  "fastapi": { type: "devicon", value: "devicon-fastapi-plain" },
+  "node.js": { type: "devicon", value: "devicon-nodejs-plain" },
+  "pandas": { type: "devicon", value: "devicon-pandas-plain" },
+  "numpy": { type: "devicon", value: "devicon-numpy-plain" },
+  "redis": { type: "devicon", value: "devicon-redis-plain" },
+  "langchain": { type: "emoji", value: "🦜" },
+  "hugging face": { type: "devicon", value: "devicon-huggingface-plain" },
+
+  "postgresql": { type: "devicon", value: "devicon-postgresql-plain" },
+  "mongodb": { type: "devicon", value: "devicon-mongodb-plain" },
+  "mysql": { type: "devicon", value: "devicon-mysql-plain" },
+  "lancedb": { type: "devicon", value: "devicon-sqldeveloper-plain" }
+};
+
+function getSkillIconHtml(skillName) {
+  const key = skillName.toLowerCase();
+  const iconInfo = SKILL_ICONS[key];
+  if (iconInfo) {
+    if (iconInfo.type === "devicon") {
+      return `<li data-name="${skillName}"><i class="${iconInfo.value} colored"></i></li>`;
+    } else if (iconInfo.type === "emoji") {
+      return `<li data-name="${skillName}"><span class="skill-emoji">${iconInfo.value}</span></li>`;
+    }
+  }
+  return `<li data-name="${skillName}"><span>${skillName}</span></li>`;
+}
+
 function renderPortfolio() {
   if (typeof PORTFOLIO_DATA === 'undefined') {
     console.error('PORTFOLIO_DATA is not defined. Make sure data.js is loaded first.');
@@ -30,12 +67,22 @@ function renderPortfolio() {
   // 1. Update logo text
   const logoEl = document.getElementById('nav-logo');
   if (logoEl) {
-    logoEl.innerHTML = `${profile.name}<span class="logo-dot"></span>`;
+    logoEl.innerHTML = `JL<span class="logo-dot"></span>`;
   }
 
   const heroWrapper = document.getElementById('hero-content-wrapper');
   if (heroWrapper) {
     heroWrapper.innerHTML = `
+      <div class="hero-badges">
+        <span class="hero-badge recruiting-badge">
+          <span class="badge-pulse"></span>
+          Seeking Summer/Spring 2027 Internships
+        </span>
+        <span class="hero-badge award-badge">
+          <i data-lucide="trophy" style="width: 12px; height: 12px; color: var(--color-secondary);"></i>
+          2x HackRice Award Winner
+        </span>
+      </div>
       <h1>Hi, I'm <span class="highlight">${profile.name}</span></h1>
       <p class="hero-subtitle">${profile.subtitle}</p>
       <div class="hero-minimal-links">
@@ -44,6 +91,8 @@ function renderPortfolio() {
         <a href="${profile.github}" target="_blank" class="minimal-link">GitHub</a>
         <span class="link-separator">/</span>
         <a href="${profile.linkedin}" target="_blank" class="minimal-link">LinkedIn</a>
+        <span class="link-separator">/</span>
+        <a href="assets/resume.pdf" target="_blank" class="minimal-link">Resume</a>
       </div>
     `;
   }
@@ -52,7 +101,7 @@ function renderPortfolio() {
   const aboutWrapper = document.getElementById('about-grid-wrapper');
   if (aboutWrapper) {
     const courseworkList = education.coursework.map(course => `<li class="tech-badge">${course}</li>`).join('');
-    
+
     let statsHtml = '';
     if (stats && stats.length > 0) {
       const statsListHtml = stats.map(stat => `
@@ -112,7 +161,11 @@ function renderPortfolio() {
     projectsWrapper.innerHTML = projects.map(project => {
       const techBadges = project.technologies.map(t => `<li class="tech-badge">${t}</li>`).join('');
       const awardHtml = project.award ? `<div style="color: var(--color-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase;">${project.award}</div>` : '';
-      
+
+      const contentHtml = project.bullets
+        ? `<ul class="project-details">${project.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`
+        : `<p class="project-desc">${project.description}</p>`;
+
       return `
         <div class="glass-card">
           <div class="project-card" data-categories="${project.categories}">
@@ -125,7 +178,7 @@ function renderPortfolio() {
               </div>
             </div>
             ${awardHtml}
-            <p class="project-desc">${project.description}</p>
+            ${contentHtml}
             <ul class="project-tech-list">
               ${techBadges}
             </ul>
@@ -138,9 +191,9 @@ function renderPortfolio() {
   // 6. Render Skills
   const skillsWrapper = document.getElementById('skills-grid-wrapper');
   if (skillsWrapper) {
-    const langList = skills.languages.map(l => `<li>${l}</li>`).join('');
-    const techList = skills.technologies.map(t => `<li>${t}</li>`).join('');
-    const dbList = skills.databases.map(d => `<li>${d}</li>`).join('');
+    const langList = skills.languages.map(l => getSkillIconHtml(l)).join('');
+    const techList = skills.technologies.map(t => getSkillIconHtml(t)).join('');
+    const dbList = skills.databases.map(d => getSkillIconHtml(d)).join('');
 
     skillsWrapper.innerHTML = `
       <!-- Languages -->
@@ -202,13 +255,23 @@ function renderPortfolio() {
   if (footerEl) {
     footerEl.innerHTML = `
       <div class="container footer-container">
-        <div class="footer-copy">
-          &copy; ${new Date().getFullYear()} ${profile.name}. Built with passion & AI.
+        <div class="footer-contact">
+          <a href="mailto:${profile.email}">
+            <i data-lucide="mail"></i> ${profile.email}
+          </a>
+          <span class="separator">/</span>
+          <a href="tel:${profile.phone.replace(/[^0-9+]/g, '')}">
+            <i data-lucide="phone"></i> ${profile.phone}
+          </a>
         </div>
+        
         <div class="footer-socials">
-          <a href="${profile.github}" target="_blank" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
-          <a href="${profile.linkedin}" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-          <a href="mailto:${profile.email}" class="social-link" aria-label="Email"><i data-lucide="mail"></i></a>
+          <a href="${profile.github}" target="_blank" class="social-link" aria-label="GitHub"><i class="devicon-github-original"></i></a>
+          <a href="${profile.linkedin}" target="_blank" class="social-link" aria-label="LinkedIn"><i class="devicon-linkedin-plain"></i></a>
+        </div>
+
+        <div class="footer-copy">
+          &copy; ${new Date().getFullYear()} ${profile.name}.
         </div>
       </div>
     `;
@@ -230,7 +293,7 @@ function initNavbar() {
     } else {
       header.classList.remove('scrolled');
     }
-    
+
     // Highlight active section link
     let current = '';
     sections.forEach(section => {
@@ -257,7 +320,7 @@ function initNavbar() {
     mobileMenuBtn.addEventListener('click', () => {
       navMenu.classList.toggle('active');
       mobileMenuBtn.classList.toggle('open');
-      
+
       if (navMenu.classList.contains('active')) {
         navMenu.style.display = 'flex';
         navMenu.style.flexDirection = 'column';
@@ -291,31 +354,53 @@ function initNavbar() {
    ========================================================================== */
 function initScrollAnimations() {
   const animatedElements = document.querySelectorAll('.glass-card, .timeline-item, .hero-content, .section-header');
-  
-  animatedElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-  });
 
   const observerOptions = {
     root: null,
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.05, // Lower threshold for more reliable triggering
+    rootMargin: '0px 0px -30px 0px'
   };
 
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+        revealElement(entry.target);
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
+  function revealElement(el) {
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+    el.dataset.revealed = 'true';
+  }
+
   animatedElements.forEach(el => {
+    // If it's the hero content, animate it in immediately without waiting for scroll
+    if (el.classList.contains('hero-content')) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+      setTimeout(() => {
+        revealElement(el);
+      }, 100);
+      return;
+    }
+
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+
+    // Start observing for scroll entry
     observer.observe(el);
+
+    // Safety fallback: reveal after 1.5 seconds in case observer fails to trigger
+    setTimeout(() => {
+      if (el.dataset.revealed !== 'true') {
+        revealElement(el);
+      }
+    }, 1500);
   });
 }
 
@@ -377,7 +462,7 @@ function initContactForm() {
       submitBtn.innerHTML = `✓ Message Sent!`;
       submitBtn.style.backgroundColor = 'var(--color-secondary)';
       submitBtn.style.color = 'var(--bg-dark)';
-      
+
       form.reset();
 
       setTimeout(() => {
@@ -386,7 +471,7 @@ function initContactForm() {
         submitBtn.style.backgroundColor = '';
         submitBtn.style.color = '';
       }, 3000);
-      
+
       showToast("Thank you! Your message was sent successfully.");
     }, 1500);
   });
@@ -449,9 +534,9 @@ function initCanvasBackground() {
 
   // Particle configuration - expanded density for rich field
   let particles = [];
-  const particleCount = 135; // Increased from 55 to 135
+  const particleCount = 135;
   const connectionDistance = 115;
-  
+
   // Mouse position tracker
   const mouse = {
     x: null,
@@ -463,16 +548,134 @@ function initCanvasBackground() {
     radius: 200 // Expanded area of influence
   };
 
-  // Adjust canvas size
+  // Particle Class Definition
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      // Store original position to return to
+      this.originX = this.x;
+      this.originY = this.y;
+      this.vx = 0;
+      this.vy = 0;
+      this.size = Math.random() * 2 + 1; // 1px to 3px
+      this.color = `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.25})`; // Opacity 0.25 - 0.55
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+
+    update() {
+      // Mouse interactive physics (Antigravity repulsion & drag)
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance < mouse.radius) {
+          const ndx = dx / distance;
+          const ndy = dy / distance;
+
+          // Physical "sweeper" boundary: strong push when very close (acts like a physical broom)
+          const minDistance = 75;
+          if (distance < minDistance) {
+            const pushDist = minDistance - distance;
+            this.x += ndx * pushDist;
+            this.y += ndy * pushDist;
+            // Add a strong sudden velocity impulse
+            this.vx += ndx * 4;
+            this.vy += ndy * 4;
+          } else {
+            // General exponential repulsion field (very noticeable at mid-range)
+            const force = (mouse.radius - distance) / mouse.radius;
+            this.vx += ndx * force * 3.5;
+            this.vy += ndy * force * 3.5;
+          }
+
+          // Swirl drag factor: pulls particles along with cursor movement path
+          const dragFactor = (mouse.radius - distance) / mouse.radius;
+          this.vx += mouse.vx * dragFactor * 0.2;
+          this.vy += mouse.vy * dragFactor * 0.2;
+        }
+      }
+
+      // Spring force returning particle to its original position
+      const dxOrigin = this.originX - this.x;
+      const dyOrigin = this.originY - this.y;
+
+      const springStrength = 0.03; // Pull force back to home position
+      this.vx += dxOrigin * springStrength;
+      this.vy += dyOrigin * springStrength;
+
+      // Friction / Damping: smoothly decelerate to avoid perpetual oscillation
+      const friction = 0.88;
+      this.vx *= friction;
+      this.vy *= friction;
+
+      // Physics integration: position + velocity
+      this.x += this.vx;
+      this.y += this.vy;
+    }
+  }
+
+  // Initialize Particles Array
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  // Loop & Draw Connections
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Smoothly decay mouse speed
+    mouse.vx *= 0.9;
+    mouse.vy *= 0.9;
+
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+
+    // Draw minimalist lines between nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < connectionDistance) {
+          const alpha = (1 - dist / connectionDistance) * 0.14;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(animate);
+  }
+
+  // Adjust canvas size and re-initialize static positions
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    initParticles(); // Redistribute particles to match new size
   }
-  
+
+  // Event Listeners Setup
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Capture mouse coordinates and calculate velocity
   window.addEventListener('mousemove', (e) => {
     if (mouse.lastX !== null && mouse.lastY !== null) {
       mouse.vx = e.clientX - mouse.lastX;
@@ -493,129 +696,5 @@ function initCanvasBackground() {
     mouse.lastY = null;
   });
 
-  // Particle Class Definition
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      // Soft drift base speeds
-      this.baseVx = (Math.random() - 0.5) * 0.2;
-      this.baseVy = -Math.random() * 0.15 - 0.05; // Gentle float upwards (Antigravity)
-      this.vx = this.baseVx;
-      this.vy = this.baseVy;
-      this.size = Math.random() * 2 + 1; // 1px to 3px
-      // White particles with clear but elegant opacity
-      this.color = `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.25})`; // Opacity 0.25 - 0.55
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    }
-
-    update() {
-      // Re-route if hitting horizontal bounds
-      if (this.x < 0 || this.x > canvas.width) {
-        this.vx = -this.vx;
-        this.baseVx = -this.baseVx;
-      }
-      // Reset to bottom if floating past the top
-      if (this.y < -10) {
-        this.y = canvas.height + 10;
-        this.x = Math.random() * canvas.width;
-        this.vx = this.baseVx;
-        this.vy = this.baseVy;
-      }
-
-      // Mouse interactive physics (Antigravity repulsion & drag)
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const distance = Math.hypot(dx, dy);
-        
-        if (distance < mouse.radius) {
-          const ndx = dx / distance;
-          const ndy = dy / distance;
-          
-          // Physical "sweeper" boundary: strong push when very close (acts like a physical broom)
-          const minDistance = 75;
-          if (distance < minDistance) {
-            const pushDist = minDistance - distance;
-            this.x += ndx * pushDist;
-            this.y += ndy * pushDist;
-            // Add a strong sudden velocity impulse
-            this.vx += ndx * 5;
-            this.vy += ndy * 5;
-          } else {
-            // General exponential repulsion field (very noticeble at mid-range)
-            const force = (mouse.radius - distance) / mouse.radius;
-            this.vx += ndx * force * 4.5;
-            this.vy += ndy * force * 4.5;
-          }
-
-          // Swirl drag factor: pulls particles along with cursor movement path
-          const dragFactor = (mouse.radius - distance) / mouse.radius;
-          this.vx += mouse.vx * dragFactor * 0.25;
-          this.vy += mouse.vy * dragFactor * 0.25;
-        }
-      }
-
-      // Physics integration: position + velocity
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // Friction: decelerate back to the base slow drift speed smoothly
-      this.vx = this.vx * 0.94 + this.baseVx * 0.06;
-      this.vy = this.vy * 0.94 + this.baseVy * 0.06;
-    }
-  }
-
-  // Initialize Particles Array
-  function initParticles() {
-    particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-  }
-
-  // Loop & Draw Connections
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Smoothly decay mouse speed
-    mouse.vx *= 0.9;
-    mouse.vy *= 0.9;
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    // Draw minimalist lines between nearby particles
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < connectionDistance) {
-          // Connection lines are also brighter white
-          const alpha = (1 - dist / connectionDistance) * 0.14;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-
-    animationFrameId = requestAnimationFrame(animate);
-  }
-
-  initParticles();
   animate();
 }
