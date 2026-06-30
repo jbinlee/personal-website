@@ -161,8 +161,8 @@ function renderPortfolio() {
           <div class="glass-card timeline-content">
             <h3>${exp.role}</h3>
             <div class="timeline-company">
-              ${getCompanyLogoHtml(exp.company)}
               ${exp.company}
+              ${getCompanyLogoHtml(exp.company)}
             </div>
             <ul class="timeline-details">
               ${bulletList}
