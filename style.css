@@ -522,6 +522,16 @@ header.scrolled .nav-container {
   color: var(--text-muted);
   font-weight: 300;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-company i {
+  color: var(--color-secondary);
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
 }
 
 .timeline-details {

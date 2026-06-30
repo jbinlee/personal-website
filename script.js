@@ -56,6 +56,17 @@ function getSkillIconHtml(skillName) {
   return `<li data-name="${skillName}"><span>${skillName}</span></li>`;
 }
 
+const COMPANY_ICONS = {
+  "openstax": "book-open",
+  "rice university digital health initiative": "heart-pulse",
+  "scholarhive": "graduation-cap"
+};
+
+function getCompanyIcon(companyName) {
+  const key = companyName.trim().toLowerCase();
+  return COMPANY_ICONS[key] || "briefcase";
+}
+
 function renderPortfolio() {
   if (typeof PORTFOLIO_DATA === 'undefined') {
     console.error('PORTFOLIO_DATA is not defined. Make sure data.js is loaded first.');
@@ -145,7 +156,10 @@ function renderPortfolio() {
           <div class="timeline-date">${exp.period}</div>
           <div class="glass-card timeline-content">
             <h3>${exp.role}</h3>
-            <div class="timeline-company">${exp.company}</div>
+            <div class="timeline-company">
+              <i data-lucide="${getCompanyIcon(exp.company)}"></i>
+              ${exp.company}
+            </div>
             <ul class="timeline-details">
               ${bulletList}
             </ul>
