@@ -739,6 +739,12 @@ header.scrolled .nav-container {
   line-height: 1;
 }
 
+.skills-list li .skill-image-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
 .skills-list li:hover {
   border-color: var(--color-primary);
   color: var(--text-main);

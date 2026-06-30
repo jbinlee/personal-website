@@ -35,7 +35,7 @@ const SKILL_ICONS = {
   "numpy": { type: "devicon", value: "devicon-numpy-plain" },
   "redis": { type: "devicon", value: "devicon-redis-plain" },
   "langchain": { type: "emoji", value: "🦜" },
-  "hugging face": { type: "devicon", value: "devicon-huggingface-plain" },
+  "hugging face": { type: "image", value: "assets/huggingface.svg" },
 
   "postgresql": { type: "devicon", value: "devicon-postgresql-plain" },
   "mongodb": { type: "devicon", value: "devicon-mongodb-plain" },
@@ -51,6 +51,8 @@ function getSkillIconHtml(skillName) {
       return `<li data-name="${skillName}"><i class="${iconInfo.value} colored"></i></li>`;
     } else if (iconInfo.type === "emoji") {
       return `<li data-name="${skillName}"><span class="skill-emoji">${iconInfo.value}</span></li>`;
+    } else if (iconInfo.type === "image") {
+      return `<li data-name="${skillName}"><img src="${iconInfo.value}" alt="${skillName}" class="skill-image-logo" /></li>`;
     }
   }
   return `<li data-name="${skillName}"><span>${skillName}</span></li>`;
