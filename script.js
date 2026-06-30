@@ -56,15 +56,19 @@ function getSkillIconHtml(skillName) {
   return `<li data-name="${skillName}"><span>${skillName}</span></li>`;
 }
 
-const COMPANY_ICONS = {
-  "openstax": "book-open",
-  "rice university digital health initiative": "heart-pulse",
-  "scholarhive": "graduation-cap"
+const COMPANY_LOGOS = {
+  "openstax": "assets/openstax.png",
+  "rice university digital health initiative": "assets/rice.png",
+  "scholarhive": "assets/scholarhive.ico"
 };
 
-function getCompanyIcon(companyName) {
+function getCompanyLogoHtml(companyName) {
   const key = companyName.trim().toLowerCase();
-  return COMPANY_ICONS[key] || "briefcase";
+  const logoPath = COMPANY_LOGOS[key];
+  if (logoPath) {
+    return `<img src="${logoPath}" alt="${companyName} logo" class="company-logo" />`;
+  }
+  return `<i data-lucide="briefcase"></i>`;
 }
 
 function renderPortfolio() {
@@ -157,7 +161,7 @@ function renderPortfolio() {
           <div class="glass-card timeline-content">
             <h3>${exp.role}</h3>
             <div class="timeline-company">
-              <i data-lucide="${getCompanyIcon(exp.company)}"></i>
+              ${getCompanyLogoHtml(exp.company)}
               ${exp.company}
             </div>
             <ul class="timeline-details">
