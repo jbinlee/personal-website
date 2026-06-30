@@ -5,7 +5,7 @@ const PORTFOLIO_DATA = {
     title: "AI Engineer & Fullstack Developer",
     recruitingMode: true,
     recruitingStatus: "Recruiting: Seeking Opportunities",
-    subtitle: "I'm looking for internship opportunities in Spring/Summer 2027.",
+    subtitle: "Building solutions using software and AI.",
     bio: "I am a builder who loves bridging the gap between cutting-edge Artificial Intelligence and robust software engineering. Whether orchestrating multi-agent systems using LangChain, fine-tuning LLM prompts, or architecting modular fullstack backends with FastAPI and PostgreSQL, I focus on building products that solve real needs. Currently, I work as an AI Engineer at OpenStax, leading a team of developers to build interactive education platforms powered by AI. I thrive in collaborative environments, hackathons, and projects that challenge me to learn new technologies quickly.",
     email: "jl537@rice.edu",
     phone: "(919) 381-2262",

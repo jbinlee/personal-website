@@ -97,7 +97,7 @@ function renderPortfolio() {
         </span>
         <span class="hero-badge award-badge">
           <i data-lucide="trophy" style="width: 12px; height: 12px; color: var(--color-secondary);"></i>
-          2x Hackathon Award Winner
+          2x Hackathon Winner
         </span>
       </div>
       <h1>Hi, I'm <span class="highlight">${profile.name}</span></h1>
