@@ -159,11 +159,9 @@ function renderPortfolio() {
           <div class="timeline-dot"></div>
           <div class="timeline-date">${exp.period}</div>
           <div class="glass-card timeline-content">
+            ${getCompanyLogoHtml(exp.company)}
             <h3>${exp.role}</h3>
-            <div class="timeline-company">
-              ${exp.company}
-              ${getCompanyLogoHtml(exp.company)}
-            </div>
+            <div class="timeline-company">${exp.company}</div>
             <ul class="timeline-details">
               ${bulletList}
             </ul>
